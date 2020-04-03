@@ -30,7 +30,7 @@ if ($email == "") {
 }
 print_r($errorArray);
 if($password == ""){
-    $errorArray = "password cannot be blank";
+    $errorArray = "password cannot be empty";
 }
 print_r($errorArray);
 if($gender == ""){

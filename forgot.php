@@ -1,18 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+ <title>CMH password forgotten</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width-device-width, initial-scale-width" />
-    <title>CMH password forgotten</title>
-</head>
-<?php include_once("lib/header.php"); ?><br />
+ <?php include_once("lib/header.php"); ?><br />
 
-<body>
-    <?php include_once("lib/footer.php"); ?><br />
+ <body>
 
-    Why did you forget your password?<br />
+     Why did you forget your password?<br />
+     <h3>forgot password</h3>
+     <p>Provide the email associated with your account</p>
+     <form action="processforgot.php" method="POST">
+         <p>
+             <?php
+                //Display more accurate messages
+                //
+                if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
+                    echo "<span style='color:red'>" . $_SESSION['error'] . "</span>";
 
-</body>
+                    //session_unset();
+                    session_destroy();
+                }
+                ?>
+         </p>        
+             <p>
+                 <label>Email</label><br />
+                 <input <?php
 
-</html>
+                        if (isset($_SESSION['email'])) {
+                            echo "value=" . $_SESSION['email'];
+                        }
+                        ?> value="" type="text" name="email" placeholder="Email" />
+             </p>
+             <p>
+                 <button type="submit">Send Reset Code</button>
+             </p>
+
+     </form>
+
+ </body>
+ <?php include_once("lib/footer.php"); ?><br />
+
+ </html>

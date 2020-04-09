@@ -5,3 +5,4 @@ The page follows all the directions given in the video, but it's not as organize
 There's no super admin level as required in the question also.
 But the remaining functionalities work to an extent.
 The index is the main page.
+Thank you for the lessons, I learnt a lot.

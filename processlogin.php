@@ -20,9 +20,7 @@ if($errorCount > 0){
 
     header("Location: login.php?");
 } else {
-    $allUsers = scandir("db/users/");
-    $countAllUsers = count($allUsers);
-
+   
     for ($counter = 0; $counter < $countAllUsers; $counter++) {
 
              $currentUser = $allUsers[$counter];

@@ -3,29 +3,18 @@
     <meta name="viewport" content="width-device-width, initial-scale-width" />
     <title>CMH hospital Registration</title>
 </head>
-<?php include_once("lib/header.php");
+<?php include_once("lib/header.php"); require_once("functions/alert.php"); require_once("functions/user.php");
 if (isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn'])) {
     //redirect to dashboard
     header("Location: dashboard.php");
 }
-
-
 ?>
 <h3>Register</h3>
 <p><strong>Welcome, Please Register</strong></p>
 <p>All fields are required</p>
 <form method="POST" action="processregister.php">
     <p>
-        <?php
-        //Display more accurate messages
-        //
-        if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-            echo "<span style='color:red'>" . $_SESSION['error'] . "</span>";
-
-            //session_unset();
-            session_destroy();
-        }
-        ?>
+        <?php print_alert(); ?>
     </p>
 
     <p>

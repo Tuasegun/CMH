@@ -8,29 +8,16 @@
 </head>
 
 <?php include_once("lib/header.php");
+    require_once("functions/alert.php");
 if(isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn'])){
     //redirect to dashboard
     header("Location: dashboard.php");
 }
-
-
 ?>
-<p>
-    <?php 
-        if (isset($_SESSION['message']) && !empty($_SESSION['message'])) {
-            echo "<span style='color:green'>" . $_SESSION['message'] . "</span>";
-            session_destroy();
-        }
-     ?>
-</p>
 <h5>Login Form here</h5>
 <form method="POST" action="processlogin.php">
     <p>
-        <?php 
-            if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-                echo "<span style='color:red'>" . $_SESSION['error'] . "</span>";
-                         } 
-          ?>
+        <?php print_alert(); ?>
     <p>
         <label>Email</label><br />
         <input <?php

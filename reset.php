@@ -1,8 +1,10 @@
 <title>CMH password forgotten</title>
 
 <?php include_once("lib/header.php");
+require_once("functions/alert.php");
+require_once("functions/user.php");
 
-if(!$_SESSION['loggedIn'] && !isset($_GET['token'])  && !isset($_SESSION['token'])) {
+if(!is_user_loggedIn() && !is_token_set()) {
     $_SESSION["error"] = "You are not authorized to view that page ";
     header("Location: login.php");
 }
@@ -15,43 +17,37 @@ if(!$_SESSION['loggedIn'] && !isset($_GET['token'])  && !isset($_SESSION['token'
     <p>Reset passwords associated with your account: [email]</p>
     <form action="processreset.php" method="POST">
         <p>
-            <?php
-            //Display more accurate messages
-            //
-            if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-                echo "<span style='color:red'>" . $_SESSION['error'] . "</span>";
-                session_destroy();
-            }
-            ?>
+            <!-- Display more accurate messages       -->
+             <?php print_alert();     ?>
         </p>
-        <?php if(!$_SESSION['loggedIn']) {?>
-        <p>
-            <input <?php
-                    if (isset($_SESSION['token'])) {
-                        echo "value='" . $_SESSION['token'] . "'";
-                    } else {
-                        echo "value='" . $_GET['token'] . "'";
-                    }
-                    ?> type="hidden" name="token" />
+        <?php if (!is_user_loggedIn()) { ?>
+            <p>
+                <input <?php
+                        if (is_token_set_in_session()) {
+                            echo "value='" . $_SESSION['token'] . "'";
+                        } else {
+                            echo "value='" . $_GET['token'] . "'";
+                        }
+                        ?> type="hidden" name="token" />
             <?php } ?>
-        </p>
-        <p>
-            <label>Email</label><br />
-            <input <?php
+            </p>
+            <p>
+                <label>Email</label><br />
+                <input <?php
 
-                    if (isset($_SESSION['email'])) {
-                        echo "value=" . $_SESSION['email'];
-                    }
-                    ?> value="[email]" type="text" name="email" placeholder="Email" />
-        </p>
-        <p>
-            <label>Enter New Password</label><br />
-            <input type="password" name="password" placeholder="Password" />
-        </p>
+                        if (isset($_SESSION['email'])) {
+                            echo "value=" . $_SESSION['email'];
+                        }
+                        ?> value="[email]" type="text" name="email" placeholder="Email" />
+            </p>
+            <p>
+                <label>Enter New Password</label><br />
+                <input type="password" name="password" placeholder="Password" />
+            </p>
 
-        <p>
-            <button type="submit">Reset password</button>
-        </p>
+            <p>
+                <button type="submit">Reset password</button>
+            </p>
 
     </form>
 

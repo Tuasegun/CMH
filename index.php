@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include_once("lib/header.php"); ?>
+<?php include_once("lib/header.php"); require_once("functions/alert.php")?>
 <p>
     <?php
     //Display more accurate messages
-    //
-    if (isset($_SESSION['message']) && !empty($_SESSION['message'])) {
-        echo "<span style='color:green'>" . $_SESSION['message'] . "</span>";
-        session_destroy();
-    }
+        print_alert();
     ?>
 </p>
 

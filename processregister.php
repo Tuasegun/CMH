@@ -1,4 +1,5 @@
 <?php session_start();
+    require_once("functions/user.php");
 //Counting the data
 $errorCount = 0;
 
@@ -18,7 +19,7 @@ $_SESSION['gender'] = $gender;
 $_SESSION['designation'] = $designation;
 $_SESSION['department'] = $department;
 
-$_SESSION['first_name'] =  $first_name;
+
 if ($errorCount > 0) {
     //redirect back, display the error
     $session_error = "You have " . $errorCount . " error";
@@ -31,16 +32,11 @@ if ($errorCount > 0) {
     $_SESSION["error"] = $session_error;
 
     header("Location:register.php?");
+
 } else {
     //count all users
-    $allUsers = scandir("db/users/");
-    
-}
-    $countAllUsers = count($allUsers);
-
-    $newUserId = $countAllUsers-1;
-
-    $userObject = [
+        $newUserId = ($countAllUsers-1);
+       $userObject = [
         'id' => $newUserId,
         'first_name'=> $first_name,
         'last_name' => $last_name,
@@ -48,46 +44,24 @@ if ($errorCount > 0) {
         'password' => password_hash($password,PASSWORD_DEFAULT),
         'gender' => $gender,
         'designation' => $designation,
-        'department' => $department,
+        'department' => $department
     ];
-    $_SESSION['email'] = $email;
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-    $_SESSION["error"] = "Invalid email address ";
-    header("Location:register.php");
-    die();
-    }
-
-    $_SESSION['first_name'] =  $first_name;
-    if(!preg_match("/^[a-zA-Z]*$/",$first_name)){
-    $_SESSION["error"] = "Invalid Name";
-    header("Location:register.php");
-    die();
-    }
-    $_SESSION['last_name'] =  $last_name;
-    if (!preg_match("/^[a-zA-Z]*$/", $first_name)) {
-    $_SESSION["error"] = "Invalid Name";
-    header("Location:register.php");
-    die();
-}
 
     //loop
-    for ($counter = 0; $counter < $countAllUsers ; $counter++) {
+    $userExists = find_user($email);
 
-        $currentUser = $allUsers[$counter];
-
-        if($currentUser == $email . ".json"){
+        if($userExists){
             $_SESSION["error"] = "Registration Failed, User already exists ";
             header("Location:register.php");
             die();
         }
     //save in the database;
-    file_put_contents("db/users/" . $email . ".json", json_encode($userObject));
+
+    save_user($userObject);
     $_SESSION["message"] = "Registration Successful, You can now login " . $first_name;
     header("Location:login.php");
 
-
-    }
-
+}
 
    
 

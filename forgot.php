@@ -1,6 +1,6 @@
  <title>CMH password forgotten</title>
 
- <?php include_once("lib/header.php"); ?><br />
+ <?php include_once("lib/header.php"); require_once("functions/alert.php");?><br />
 
  <body>
 
@@ -9,16 +9,7 @@
      <p>Provide the email associated with your account</p>
      <form action="processforgot.php" method="POST">
          <p>
-             <?php
-                //Display more accurate messages
-                //
-                if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-                    echo "<span style='color:red'>" . $_SESSION['error'] . "</span>";
-
-                    //session_unset();
-                    session_destroy();
-                }
-                ?>
+             <?php print_alert();           ?>
          </p>        
              <p>
                  <label>Email</label><br />

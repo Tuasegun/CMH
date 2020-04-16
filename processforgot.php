@@ -1,4 +1,5 @@
 <?php session_start();
+require_once("functions/alert.php");
 //Counting the data
 $errorCount = 0;
 $email = $_POST['email'] != "" ? $_POST['email'] : $errorCount++;
@@ -13,7 +14,7 @@ if ($errorCount > 0) {
     }
 
     $session_error .= " in your submission";
-    $_SESSION["error"] = $session_error;
+    set_alert('error',$session_error);
 
     header("Location: forgot.php?");
 }else{

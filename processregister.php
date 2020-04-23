@@ -1,5 +1,7 @@
 <?php session_start();
-    require_once("functions/user.php");
+require_once("functions/user.php");
+require_once("functions/redirect.php");
+require_once("functions/alert.php");
 //Counting the data
 $errorCount = 0;
 
@@ -19,6 +21,25 @@ $_SESSION['gender'] = $gender;
 $_SESSION['designation'] = $designation;
 $_SESSION['department'] = $department;
 
+$_SESSION['first_name'] =  $first_name;
+if (!preg_match("/^[a-zA-Z]*$/", $first_name)) {
+    $_SESSION["error"] = "Invalid Name";
+    header("Location:register.php");
+    die();
+}
+$_SESSION['last_name'] =  $last_name;
+if (!preg_match("/^[a-zA-Z]*$/", $first_name)) {
+    $_SESSION["error"] = "Invalid Name";
+    header("Location:register.php");
+    die();
+}
+$_SESSION['email'] = $email;
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $_SESSION["error"] = "Invalid email address ";
+    header("Location:register.php");
+    die();
+}
+
 
 if ($errorCount > 0) {
     //redirect back, display the error
@@ -35,9 +56,9 @@ if ($errorCount > 0) {
 
 } else {
     //count all users
-        $newUserId = ($countAllUsers-1);
+        
        $userObject = [
-        'id' => $newUserId,
+        'id' => uniqid(),
         'first_name'=> $first_name,
         'last_name' => $last_name,
         'email' => $email,
@@ -51,15 +72,15 @@ if ($errorCount > 0) {
     $userExists = find_user($email);
 
         if($userExists){
-            $_SESSION["error"] = "Registration Failed, User already exists ";
-            header("Location:register.php");
+            set_alert('error', "Registration Failed, User already exists ");
+            redirect_to("register.php");
             die();
         }
     //save in the database;
 
     save_user($userObject);
-    $_SESSION["message"] = "Registration Successful, You can now login " . $first_name;
-    header("Location:login.php");
+    set_alert('message', "Registration Successful, You can now login " . $first_name);
+    redirect_to("login.php");
 
 }
 

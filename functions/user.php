@@ -1,7 +1,7 @@
 <?php
 include_once('alert.php');
  function is_user_loggedIn(){
-     if (!$_SESSION['loggedIn'] && !empty($_SESSION['loggedIn'])){
+     if ($_SESSION['loggedIn'] && !empty($_SESSION['loggedIn'])){
          return true;
      }
      return false;
@@ -20,14 +20,13 @@ include_once('alert.php');
  function find_user($email = "" ){
     //check if a user exists
     //count all users
-    if ($email){
+    if (!$email){
         set_alert('error', 'User email is not set');
         die();
     }
-   
+
     $allUsers = scandir("db/users/");
     $countAllUsers = count($allUsers);
-    
     for ($counter = 0; $counter < $countAllUsers; $counter++) {
 
         $currentUser = $allUsers[$counter];
@@ -37,12 +36,14 @@ include_once('alert.php');
                         $userString = file_get_contents("db/users/" . $currentUser);
                     $userObject = json_decode($userString);
                     return $userObject;
-                
-           }
-    }
+
+               }
+
+        }
     return false;
+    }
+function save_user($userObject){
+    file_put_contents("db/users/" . $userObject['email'] . ".json", json_encode($userObject));
 }
-    function save_user($userObject){
-    file_put_contents("db/users/" .$userObject['email'] . ".json", json_encode($userObject));
-}
+
 ?>

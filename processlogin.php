@@ -1,4 +1,10 @@
 <?php session_start();
+require_once("functions/alert.php");
+require_once("functions/email.php");
+require_once("functions/redirect.php");
+require_once("functions/token.php");
+require_once("functions/user.php");
+
 $errorCount = 0;
 
 
@@ -16,18 +22,15 @@ if($errorCount > 0){
     }
 
     $session_error .= " in your submission";
-    $_SESSION["error"] = $session_error;
+    set_alert('error', $session_error);
 
-    header("Location: login.php?");
+    redirect_to("login.php?");
 } else {
-   
-    for ($counter = 0; $counter < $countAllUsers; $counter++) {
+            $currentUser = find_user($email);
 
-             $currentUser = $allUsers[$counter];
-
-             if ($currentUser == $email . ".json") {
+             if ($currentUser) {
                  //check password
-                 $userString = file_get_contents("db/users/".$currentUser);
+                 $userString = file_get_contents("db/users/" . $currentUser->email . ".json");
                  $userObject = json_decode($userString);
                  $passwordFromDB = $userObject->password;
 
@@ -41,21 +44,20 @@ if($errorCount > 0){
                      $_SESSION['email'] = $userObject->email;
                      $_SESSION['fullname'] = $userObject->first_name . " " . $userObject->last_name;
                      $_SESSION['role'] = $userObject->designation;
-                     if( $userObject->designation == 'Patient'){
-                         header("Location:patients.php");
+                     if( $userObject->designation == 'Patients'){
+                         redirect_to("patients.php");
                      }else{
-                     header("Location:mt.php");
+                     redirect_to("mt.php");
                      }
                      die();
 
                  }
 
 
-         }
+        
 
     }
-    $_SESSION["error"] = "Invalid email or password";
-    header("Location: login.php");
+    set_alert('error', "Invalid email or password");
+    redirect_to("login.php");
     die();
 }
-date("db/users".$currentUser);

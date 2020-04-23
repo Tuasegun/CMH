@@ -1,31 +1,22 @@
-<?php 
-function print_error(){
-    if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-        echo "<span style='color:red'>" . $_SESSION['error'] . "</span>";
-        session_destroy();
-    }
-}
+<?php
+
 function print_alert(){
 
     $types= ['message', 'info', 'error'];
 
-    $colors = ['green', 'grey', 'red'];
+    $colors = ['success', 'info', 'danger'];
+          for($i = 0; $i < count($types); $i++){
 
-    for($i = 0; $i < count($types); $i++){
-        
         if(isset($_SESSION[$types[$i]]) && !empty($_SESSION[$types[$i]]) ) {
-            echo "<span style='color:".$colors[$i]."'>" . $_SESSION[$types[$i]] . "</span>";
+            echo "<div class='alert alert-".$colors[$i]."' role='alert'>" . $_SESSION[$types[$i]] .
+            "</div>";
             session_destroy();
         }
     }
 }
 
-function print_message(){
-    if (isset($_SESSION['message']) && !empty($_SESSION['message'])) {
-        echo "<span style='color:green'>" . $_SESSION['message'] . "</span>";
-        session_destroy();
-    }
-}
+
+
 function set_alert($type = "message", $content =""){
     switch($type){
         case "message":

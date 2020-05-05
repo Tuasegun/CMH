@@ -26,21 +26,40 @@ if (file_exists($filename)) {
 <br />
 <div class="container" style="width:500px;">
     <?php
-    $allPatients = scandir("appointments/");
-    $countAllPatients = count($allPatients);
-    for ($counter = 0; $counter < $countAllPatients; $counter++) {
+    //$allPatients = scandir("appointments/");
+    //$countAllPatients = count($allPatients);
+    //for ($counter = 0; $counter < $countAllPatients; $counter++) {
 
-        if (file_exists("appointments/")) {
-            $Patients = $allPatients[$counter];
+       // if (file_exists("appointments/")) {
+        //    $Patients = $allPatients[$counter];
             $seePatients = file_get_contents("appointments/" . "" . ".json");
-            $data = json_decode($seePatients);
-            print_r($data);
-        }
-    }
+            $data = json_decode($seePatients, true);
+            echo "<table>
+                    <tr>
+                            <td><strong>Appointment Date</strong></td>
+                            <td><strong>Appointment Time</strong></td>
+                            <td><strong>Appointment Nature</strong></td>
+                            <td><strong>Complaint</strong></td>
+                            <td><strong>Department</strong></td>
+
+                    </tr>";
+            foreach ($data as $appointmentObject): ?>
+                <tr>
+                <td><strong><?php echo $_SESSION['appointment_date'] = $appointment_date ->appointment_date ?> </strong></td>
+                <td><strong><?php echo $appointmentObject->appointment_time ?> </strong></td>
+                <td><strong><?php echo $appointmentObject->appointment_nature ?> </strong></td>
+                <td><strong><?php echo $appointmentObject->complaint ?> </strong></td>
+                <td><strong><?php echo $appointmentObject->department ?> </strong></td>
+                </tr>
+            <?php endforeach; echo "</table>"; ?>    
+    <?php
+ 
+        //}
+    //}
     ?>
 </div>
 
-    <!-- <form method="POST" action="mtprocess.php">
+<!-- <form method="POST" action="mtprocess.php">
     <p>
         <button class="btn btn-sm btn-success" type="submit">Check Patients</button>
     </p>
@@ -48,4 +67,4 @@ if (file_exists($filename)) {
 
 
 
-    </html>
+</html>

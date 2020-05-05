@@ -35,7 +35,7 @@ if ($errorCount > 0) {
 else{
     
     
-    $appointmentObject= "Appointments" = [
+    $appointmentObject=  [
         'appointment_date' => $appointment_date,
         'appointment_time' => $appointment_time,
         'appointment_nature' => $appointment_nature,

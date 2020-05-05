@@ -1,8 +1,8 @@
 # CMH
 CMH Hospitals Tutorials
-This is a basic html webpage, I wasn't able to style the frontend part due to shortage of time.
-The page follows all the directions given in the video, but it's not as organized as expected.
-There's no super admin level as required in the question also.
-But the remaining functionalities work to an extent.
-The index is the main page.
-Thank you for the lessons, I learnt a lot.
+Now this is very incomplete as I can't make the transactions display on the medical team yet patient's can't also check their transactions.
+the payment goes thus, after login it's pay bill > input details > rave > redirect
+emails would have been sent to the user
+I don't still have admin yet also, it's quite late already. 
+Thank you.
+the task is quite hard without the videos.
